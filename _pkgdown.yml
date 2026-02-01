@@ -1,0 +1,23 @@
+url: https://jtalboys.github.io/dartScoreR/
+
+template:
+  bootstrap: 5
+
+home:
+  title: dartScoreR
+  description: >-
+    An R6-based package for playing and analyzing X01 darts games.
+
+reference:
+  - title: Main class
+    contents:
+      - darts
+      - dartScoreR-package
+  - title: Utilities
+    contents:
+      - parse_darts
+      - parse_single_dart
+      - is_valid_dart_score
+      - get_valid_dart_scores
+      - get_checkout_doubles
+      - max_turn_score
