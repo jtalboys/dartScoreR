@@ -7,7 +7,7 @@
 #'
 #' @section Main Class:
 #' \describe{
-#'   \item{\code{\link{X01Game}}}{The primary R6 class for managing a darts
+#'   \item{\code{\link{darts}}}{The primary R6 class for managing a darts
 #'   game}
 #' }
 #'

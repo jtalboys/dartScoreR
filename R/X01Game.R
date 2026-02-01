@@ -14,9 +14,9 @@
 #'
 #' @export
 #' @importFrom R6 R6Class
-X01Game <- R6::R6Class(
+darts <- R6::R6Class(
 
-  classname = "X01Game",
+  classname = "darts",
 
   public = list(
 
@@ -29,15 +29,15 @@ X01Game <- R6::R6Class(
     #' @param player_name Character. The player's name. Default is "Player 1".
     #' @param double_out Logical. Whether the game requires a double to finish.
     #'   Default is TRUE.
-    #' @return A new `X01Game` object.
+    #' @return A new `darts` object.
     initialize = function(starting_score = 501L,
                           player_name = "Player 1",
                           double_out = TRUE) {
       stopifnot(
         "starting_score must be a positive integer" =
           is.numeric(starting_score) &&
-            starting_score > 0 &&
-            starting_score %% 1 == 0,
+          starting_score > 0 &&
+          starting_score %% 1 == 0,
         "player_name must be a character string" =
           is.character(player_name) && length(player_name) == 1,
         "double_out must be logical" =
