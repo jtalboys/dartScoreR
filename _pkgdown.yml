@@ -1,4 +1,4 @@
-url: ~
+url: https://jtalboys.github.io/dartScoreR/
 
 template:
   bootstrap: 5
@@ -12,7 +12,7 @@ reference:
   - title: Main class
     contents:
       - darts
-      - dartsScoreR-package
+      - dartScoreR-package
   - title: Utilities
     contents:
       - parse_darts
