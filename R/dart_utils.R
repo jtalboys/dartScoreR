@@ -3,7 +3,8 @@
 #' Parses dart notation strings (e.g., "T20", "D16", "S5", "BULL", "25")
 #' into their numeric scores and identifies doubles.
 #'
-#' @param darts A character vector of dart notations or a numeric vector of scores.
+#' @param darts A character vector of dart notations or a numeric vector of
+#'   scores.
 #'   Valid string notations include:
 #'   - "S1" to "S20": Single (1-20 points)
 #'   - "D1" to "D20": Double (2-40 points, even numbers only)

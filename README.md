@@ -4,7 +4,7 @@
 
 ## Features
 
-- **R6 Game Class**: Object-oriented design with `X01Game` class for easy game management
+- **R6 Game Class**: Object-oriented design with `darts` class for easy game management
 - **Flexible Score Input**: Support for dart notation ("T20", "D16", "BULL") or numeric scores
 - **Double-Out Rules**: Configurable double-out requirement with automatic bust detection
 - **Game Statistics**: Three-dart average, highest turn, bust count, and more
@@ -32,7 +32,7 @@ devtools::install_local("path/to/dartScoreR")
 library(dartScoreR)
 
 # Create a new 501 game
-game <- X01Game$new(starting_score = 501, player_name = "Alice")
+game <- darts$new(starting_score = 501, player_name = "Alice")
 
 # Throw darts using notation
 game$throw(c("T20", "T20", "T20"))  # 180!
@@ -78,13 +78,13 @@ The package supports flexible dart notation:
 
 ```r
 # Game with double-out (default)
-game <- X01Game$new(starting_score = 40, double_out = TRUE)
+game <- darts$new(starting_score = 40, double_out = TRUE)
 game$throw(c("D20"))  # Finishes the game!
 game$is_finished()
 #> [1] TRUE
 
 # Game without double-out requirement
-game <- X01Game$new(starting_score = 40, double_out = FALSE)
+game <- darts$new(starting_score = 40, double_out = FALSE)
 game$throw(c("S20", "S20"))  # Also finishes
 ```
 

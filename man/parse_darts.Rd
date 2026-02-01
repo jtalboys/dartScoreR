@@ -7,7 +7,8 @@
 parse_darts(darts)
 }
 \arguments{
-\item{darts}{A character vector of dart notations or a numeric vector of scores.
+\item{darts}{A character vector of dart notations or a numeric vector of
+scores.
 Valid string notations include:
 \itemize{
 \item "S1" to "S20": Single (1-20 points)

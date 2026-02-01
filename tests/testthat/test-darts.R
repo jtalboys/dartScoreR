@@ -1,5 +1,5 @@
-test_that("X01Game initializes correctly", {
-  game <- X01Game$new()
+test_that("darts initializes correctly", {
+  game <- darts$new()
 
   expect_equal(game$starting_score, 501L)
   expect_equal(game$current_score, 501L)
@@ -8,27 +8,27 @@ test_that("X01Game initializes correctly", {
   expect_false(game$is_finished())
 })
 
-test_that("X01Game accepts custom starting score", {
-  game <- X01Game$new(starting_score = 301)
+test_that("darts accepts custom starting score", {
+  game <- darts$new(starting_score = 301)
 
   expect_equal(game$starting_score, 301L)
   expect_equal(game$current_score, 301L)
 })
 
-test_that("X01Game accepts custom player name", {
-  game <- X01Game$new(player_name = "Test Player")
+test_that("darts accepts custom player name", {
+  game <- darts$new(player_name = "Test Player")
 
   expect_equal(game$player_name, "Test Player")
 })
 
-test_that("X01Game rejects invalid starting score", {
-  expect_error(X01Game$new(starting_score = -100))
-  expect_error(X01Game$new(starting_score = 0))
-  expect_error(X01Game$new(starting_score = "abc"))
+test_that("darts rejects invalid starting score", {
+  expect_error(darts$new(starting_score = -100))
+  expect_error(darts$new(starting_score = 0))
+  expect_error(darts$new(starting_score = "abc"))
 })
 
 test_that("throw method reduces score correctly", {
-  game <- X01Game$new(starting_score = 501)
+  game <- darts$new(starting_score = 501)
   game$throw(c("T20", "T20", "T20"))
 
   expect_equal(game$current_score, 321L)
@@ -36,14 +36,14 @@ test_that("throw method reduces score correctly", {
 })
 
 test_that("throw method handles numeric input", {
-  game <- X01Game$new(starting_score = 501)
+  game <- darts$new(starting_score = 501)
   game$throw(c(60, 60, 60))
 
   expect_equal(game$current_score, 321L)
 })
 
 test_that("throw method detects bust when going below zero", {
-  game <- X01Game$new(starting_score = 50)
+  game <- darts$new(starting_score = 50)
   game$throw(c("T20", "T20", "T20"))  # 180 > 50, should bust
 
 
@@ -54,14 +54,14 @@ test_that("throw method detects bust when going below zero", {
 })
 
 test_that("throw method detects bust when reaching 1 with double out", {
-  game <- X01Game$new(starting_score = 41, double_out = TRUE)
+  game <- darts$new(starting_score = 41, double_out = TRUE)
   game$throw(c("D20"))  # Would leave 1, which is a bust
 
   expect_equal(game$current_score, 41L)
 })
 
 test_that("throw method requires double to finish with double_out", {
-  game <- X01Game$new(starting_score = 40, double_out = TRUE)
+  game <- darts$new(starting_score = 40, double_out = TRUE)
   game$throw(c("S20", "S20"))  # Would be 0 but not a double
 
   expect_equal(game$current_score, 40L)  # Bust
@@ -69,7 +69,7 @@ test_that("throw method requires double to finish with double_out", {
 })
 
 test_that("game finishes correctly on valid checkout", {
-  game <- X01Game$new(starting_score = 40, double_out = TRUE)
+  game <- darts$new(starting_score = 40, double_out = TRUE)
   game$throw(c("D20"))
 
   expect_equal(game$current_score, 0L)
@@ -77,7 +77,7 @@ test_that("game finishes correctly on valid checkout", {
 })
 
 test_that("game finishes without double out requirement", {
-  game <- X01Game$new(starting_score = 40, double_out = FALSE)
+  game <- darts$new(starting_score = 40, double_out = FALSE)
   game$throw(c("S20", "S20"))
 
   expect_equal(game$current_score, 0L)
@@ -85,14 +85,14 @@ test_that("game finishes without double out requirement", {
 })
 
 test_that("cannot throw after game is finished", {
-  game <- X01Game$new(starting_score = 40, double_out = TRUE)
+  game <- darts$new(starting_score = 40, double_out = TRUE)
   game$throw(c("D20"))
 
   expect_error(game$throw(c("T20")), "Game is already finished")
 })
 
 test_that("undo method restores previous state", {
-  game <- X01Game$new(starting_score = 501)
+  game <- darts$new(starting_score = 501)
   game$throw(c("T20", "T20", "T20"))
   game$undo()
 
@@ -101,13 +101,13 @@ test_that("undo method restores previous state", {
 })
 
 test_that("undo method errors when no turns to undo", {
-  game <- X01Game$new()
+  game <- darts$new()
 
   expect_error(game$undo(), "No turns to undo")
 })
 
 test_that("summary returns correct statistics", {
-  game <- X01Game$new(starting_score = 501, player_name = "Test")
+  game <- darts$new(starting_score = 501, player_name = "Test")
   game$throw(c("T20", "T20", "T20"))  # 180
   game$throw(c("T20", "T20", "T19"))  # 177
 
@@ -123,7 +123,7 @@ test_that("summary returns correct statistics", {
 })
 
 test_that("get_turns returns correct data frame", {
-  game <- X01Game$new(starting_score = 501)
+  game <- darts$new(starting_score = 501)
   game$throw(c("T20", "T20", "T20"))
   game$throw(c("T19", "T19", "T19"))
 
@@ -135,7 +135,7 @@ test_that("get_turns returns correct data frame", {
 })
 
 test_that("get_turns returns empty data frame for new game", {
-  game <- X01Game$new()
+  game <- darts$new()
   turns <- game$get_turns()
 
   expect_s3_class(turns, "data.frame")
@@ -143,7 +143,7 @@ test_that("get_turns returns empty data frame for new game", {
 })
 
 test_that("method chaining works", {
-  game <- X01Game$new(starting_score = 501)
+  game <- darts$new(starting_score = 501)
 
   result <- game$throw(c("T20", "T20", "T20"))$throw(c("T20", "T20", "T20"))
 
