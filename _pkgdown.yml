@@ -12,6 +12,7 @@ reference:
   - title: Main class
     contents:
       - darts
+      - dartsScoreR-package
   - title: Utilities
     contents:
       - parse_darts
