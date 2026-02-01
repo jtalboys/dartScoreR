@@ -24,16 +24,20 @@ X01Game <- R6::R6Class(
 
     #' Create a new X01 game
 
-    #' @param starting_score Integer. The starting score (e.g., 301, 501). Default is 501.
+    #' @param starting_score Integer. The starting score (e.g., 301, 501).
+    #'   Default is 501.
     #' @param player_name Character. The player's name. Default is "Player 1".
-    #' @param double_out Logical. Whether the game requires a double to finish. Default is TRUE.
+    #' @param double_out Logical. Whether the game requires a double to finish.
+    #'   Default is TRUE.
     #' @return A new `X01Game` object.
     initialize = function(starting_score = 501L,
                           player_name = "Player 1",
                           double_out = TRUE) {
       stopifnot(
         "starting_score must be a positive integer" =
-          is.numeric(starting_score) && starting_score > 0 && starting_score %% 1 == 0,
+          is.numeric(starting_score) &&
+            starting_score > 0 &&
+            starting_score %% 1 == 0,
         "player_name must be a character string" =
           is.character(player_name) && length(player_name) == 1,
         "double_out must be logical" =
@@ -53,7 +57,8 @@ X01Game <- R6::R6Class(
 
     #' @description
     #' Record a turn (up to 3 darts)
-    #' @param darts Character vector of dart notations (e.g., c("T20", "T20", "T20"))
+    #' @param darts Character vector of dart notations
+    #'   (e.g., c("T20", "T20", "T20"))
     #'   or a numeric vector of scores. Maximum 3 darts per turn.
     #' @return Invisible self for method chaining.
     throw = function(darts) {
@@ -77,7 +82,11 @@ X01Game <- R6::R6Class(
       } else if (potential_score == 1 && private$.double_out) {
         # Can't finish on 1 with double out
         is_bust <- TRUE
-      } else if (potential_score == 0 && private$.double_out && !last_dart_double) {
+      } else if (
+        potential_score == 0 &&
+          private$.double_out &&
+          !last_dart_double
+      ) {
         # Must finish on a double
         is_bust <- TRUE
       }
@@ -141,7 +150,11 @@ X01Game <- R6::R6Class(
 
       # Calculate scores (excluding busts for average calculation)
       valid_turns <- Filter(function(t) !t$is_bust, private$.turns)
-      total_score <- sum(vapply(valid_turns, function(t) as.integer(t$turn_score), integer(1)))
+      total_score <- sum(vapply(
+        valid_turns,
+        function(t) as.integer(t$turn_score),
+        integer(1)
+      ))
 
       # Count doubles attempted and hit
       doubles_attempted <- 0L
@@ -179,12 +192,20 @@ X01Game <- R6::R6Class(
         three_dart_average = round(three_dart_avg, 2),
         highest_turn = if (total_turns > 0) {
           max(sapply(private$.turns, function(t) t$turn_score))
-        } else 0L,
-        bust_count = sum(vapply(private$.turns, function(t) isTRUE(t$is_bust), logical(1))),
+        } else {
+          0L
+        },
+        bust_count = sum(vapply(
+          private$.turns,
+          function(t) isTRUE(t$is_bust),
+          logical(1)
+        )),
         checkout_darts = if (private$.finished) {
           last_turn <- private$.turns[[length(private$.turns)]]
           last_turn$num_darts
-        } else NA_integer_,
+        } else {
+          NA_integer_
+        },
         double_out = private$.double_out
       )
     },
@@ -213,7 +234,11 @@ X01Game <- R6::R6Class(
           darts = paste(t$darts, collapse = ", "),
           score_before = t$score_before,
           turn_score = t$turn_score,
-          score_after = if (t$is_bust) t$score_before else t$score_before - t$turn_score,
+          score_after = if (t$is_bust) {
+            t$score_before
+          } else {
+            t$score_before - t$turn_score
+          },
           is_bust = t$is_bust,
           num_darts = t$num_darts,
           stringsAsFactors = FALSE
@@ -231,7 +256,12 @@ X01Game <- R6::R6Class(
       cat("Starting Score:", private$.starting_score, "\n")
       cat("Current Score:", private$.current_score, "\n")
       cat("Turns Played:", length(private$.turns), "\n")
-      cat("Status:", if (private$.finished) "FINISHED!" else "In Progress", "\n")
+      status <- if (private$.finished) {
+        "FINISHED!"
+      } else {
+        "In Progress"
+      }
+      cat("Status:", status, "\n")
       invisible(self)
     }
   ),

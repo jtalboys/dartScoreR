@@ -7,14 +7,16 @@
 #'
 #' @section Main Class:
 #' \describe{
-#'   \item{\code{\link{X01Game}}}{The primary R6 class for managing a darts game}
+#'   \item{\code{\link{X01Game}}}{The primary R6 class for managing a darts
+#'   game}
 #' }
 #'
 #' @section Utility Functions:
 #' \describe{
 #'   \item{\code{\link{parse_darts}}}{Parse dart notation strings to scores}
 #'   \item{\code{\link{is_valid_dart_score}}}{Validate dart scores}
-#'   \item{\code{\link{get_valid_dart_scores}}}{Get all valid single-dart scores}
+#'   \item{\code{\link{get_valid_dart_scores}}}{Get all valid single-dart
+#'   scores}
 #'   \item{\code{\link{get_checkout_doubles}}}{Get all valid checkout doubles}
 #'   \item{\code{\link{max_turn_score}}}{Get maximum possible turn score}
 #' }
