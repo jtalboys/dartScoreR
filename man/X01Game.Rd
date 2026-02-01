@@ -55,11 +55,13 @@ Create a new X01 game
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{starting_score}}{Integer. The starting score (e.g., 301, 501). Default is 501.}
+\item{\code{starting_score}}{Integer. The starting score (e.g., 301, 501).
+Default is 501.}
 
 \item{\code{player_name}}{Character. The player's name. Default is "Player 1".}
 
-\item{\code{double_out}}{Logical. Whether the game requires a double to finish. Default is TRUE.}
+\item{\code{double_out}}{Logical. Whether the game requires a double to finish.
+Default is TRUE.}
 }
 \if{html}{\out{</div>}}
 }
@@ -79,7 +81,8 @@ Record a turn (up to 3 darts)
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{darts}}{Character vector of dart notations (e.g., c("T20", "T20", "T20"))
+\item{\code{darts}}{Character vector of dart notations
+(e.g., c("T20", "T20", "T20"))
 or a numeric vector of scores. Maximum 3 darts per turn.}
 }
 \if{html}{\out{</div>}}
