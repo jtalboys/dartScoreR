@@ -37,7 +37,6 @@ jobs:
         with:
           extra-packages: |
             any::devtools
-            any::rcmdcheck
             any::knitr
             any::rmarkdown
           needs: check
