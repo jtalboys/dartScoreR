@@ -184,7 +184,8 @@ test_that("three dart average is calculated correctly", {
   game$throw(c("T20", "T20", "T20"))  # 180
   
   summary <- game$summary()
-  # (501 - 141) / 6 * 3 = 360 / 6 * 3 = 180
+  # Total scored: 360, darts thrown: 6
+  # Three-dart average: (360 / 6) * 3 = 180
   expect_equal(summary$three_dart_average, 180)
 })
 
