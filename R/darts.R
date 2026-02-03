@@ -21,9 +21,8 @@ darts <- R6::R6Class(
   public = list(
 
     #' @description
-
     #' Create a new X01 game
-
+    #'
     #' @param starting_score Integer. The starting score (e.g., 301, 501).
     #'   Default is 501.
     #' @param player_name Character. The player's name. Default is "Player 1".
@@ -72,22 +71,24 @@ darts <- R6::R6Class(
       turn_score <- sum(parsed$scores)
       num_darts <- length(parsed$scores)
       last_dart_double <- parsed$is_double[length(parsed$is_double)]
-
-      # Check for bust
+      
+      # Calculate potential score after this turn
       potential_score <- private$.current_score - turn_score
-
+      
+      # Check for bust conditions
       is_bust <- FALSE
       if (potential_score < 0) {
+        # Bust: score would go negative
         is_bust <- TRUE
       } else if (potential_score == 1 && private$.double_out) {
-        # Can't finish on 1 with double out
+        # Bust: can't finish on 1 with double out rule
         is_bust <- TRUE
       } else if (
         potential_score == 0 &&
           private$.double_out &&
           !last_dart_double
       ) {
-        # Must finish on a double
+        # Bust: must finish on a double when double_out is TRUE
         is_bust <- TRUE
       }
 
@@ -142,13 +143,13 @@ darts <- R6::R6Class(
 
     #' @description
     #' Get game summary statistics
-
+    #'
     #' @return A list containing game statistics.
     summary = function() {
       total_turns <- length(private$.turns)
       total_darts <- private$.darts_thrown
-
-      # Calculate scores (excluding busts for average calculation)
+      
+      # Calculate total score (excluding busts)
       valid_turns <- Filter(function(t) !t$is_bust, private$.turns)
       total_score <- sum(vapply(
         valid_turns,
@@ -159,23 +160,23 @@ darts <- R6::R6Class(
       # Count doubles attempted and hit
       doubles_attempted <- 0L
       doubles_hit <- 0L
-
+      
       for (turn in private$.turns) {
         for (i in seq_along(turn$parsed$is_double)) {
           if (turn$parsed$is_double[i]) {
             doubles_attempted <- doubles_attempted + 1L
-            # A double "hit" is harder to determine without more context
-            # For now, count all doubles thrown as attempted
+            # Note: A double "hit" is only counted if it successfully
+            # finishes the game (checked below)
           }
         }
       }
-
+      
       # If game is finished, the last dart was a successful double
       if (private$.finished && private$.double_out) {
         doubles_hit <- 1L
       }
-
-      # Three-dart average
+      
+      # Calculate three-dart average based on total points scored
       three_dart_avg <- if (total_darts > 0) {
         (private$.starting_score - private$.current_score) / total_darts * 3
       } else {
@@ -191,7 +192,7 @@ darts <- R6::R6Class(
         total_darts = total_darts,
         three_dart_average = round(three_dart_avg, 2),
         highest_turn = if (total_turns > 0) {
-          max(sapply(private$.turns, function(t) t$turn_score))
+          max(vapply(private$.turns, function(t) t$turn_score, integer(1)))
         } else {
           0L
         },
@@ -212,7 +213,7 @@ darts <- R6::R6Class(
 
     #' @description
     #' Get all turns as a data frame
-
+    #'
     #' @return A data frame with turn-by-turn information.
     get_turns = function() {
       if (length(private$.turns) == 0) {
@@ -279,8 +280,7 @@ darts <- R6::R6Class(
   active = list(
     #' @field current_score The current remaining score.
     current_score = function() private$.current_score,
-
-
+    
     #' @field starting_score The starting score for the game.
     starting_score = function() private$.starting_score,
 
