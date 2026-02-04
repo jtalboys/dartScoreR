@@ -71,10 +71,10 @@ darts <- R6::R6Class(
       turn_score <- sum(parsed$scores)
       num_darts <- length(parsed$scores)
       last_dart_double <- parsed$is_double[length(parsed$is_double)]
-      
+
       # Calculate potential score after this turn
       potential_score <- private$.current_score - turn_score
-      
+
       # Check for bust conditions
       is_bust <- FALSE
       if (potential_score < 0) {
@@ -148,7 +148,7 @@ darts <- R6::R6Class(
     summary = function() {
       total_turns <- length(private$.turns)
       total_darts <- private$.darts_thrown
-      
+
       # Calculate total score (excluding busts)
       valid_turns <- Filter(function(t) !t$is_bust, private$.turns)
       total_score <- sum(vapply(
@@ -160,7 +160,7 @@ darts <- R6::R6Class(
       # Count doubles attempted and hit
       doubles_attempted <- 0L
       doubles_hit <- 0L
-      
+
       for (turn in private$.turns) {
         for (i in seq_along(turn$parsed$is_double)) {
           if (turn$parsed$is_double[i]) {
@@ -170,12 +170,12 @@ darts <- R6::R6Class(
           }
         }
       }
-      
+
       # If game is finished, the last dart was a successful double
       if (private$.finished && private$.double_out) {
         doubles_hit <- 1L
       }
-      
+
       # Calculate three-dart average based on total points scored
       three_dart_avg <- if (total_darts > 0) {
         (private$.starting_score - private$.current_score) / total_darts * 3
@@ -280,7 +280,7 @@ darts <- R6::R6Class(
   active = list(
     #' @field current_score The current remaining score.
     current_score = function() private$.current_score,
-    
+
     #' @field starting_score The starting score for the game.
     starting_score = function() private$.starting_score,
 

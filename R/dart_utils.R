@@ -152,19 +152,19 @@ is_valid_dart_score <- function(score) {
 get_valid_dart_scores <- function() {
   # Singles: 1-20
   singles <- 1L:20L
-  
+
   # Doubles: 2, 4, 6, ..., 40
   doubles <- seq(2L, 40L, by = 2L)
-  
+
   # Triples: 3, 6, 9, ..., 60
   triples <- seq(3L, 60L, by = 3L)
-  
+
   # Bulls: 25 (outer), 50 (inner/double)
   bulls <- c(25L, 50L)
-  
+
   # Miss
   miss <- 0L
-  
+
   sort(unique(c(miss, singles, doubles, triples, bulls)))
 }
 

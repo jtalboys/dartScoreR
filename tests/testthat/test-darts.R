@@ -152,15 +152,15 @@ test_that("method chaining works", {
 
 test_that("multiple consecutive busts are handled correctly", {
   game <- darts$new(starting_score = 50)
-  
+
   # First bust
   game$throw(c("T20", "T20", "T20"))  # 180 > 50
   expect_equal(game$current_score, 50L)
-  
+
   # Second bust
   game$throw(c("T20", "T20"))  # 120 > 50
   expect_equal(game$current_score, 50L)
-  
+
   summary <- game$summary()
   expect_equal(summary$bust_count, 2L)
 })
@@ -168,12 +168,12 @@ test_that("multiple consecutive busts are handled correctly", {
 test_that("undo works after finishing a game", {
   game <- darts$new(starting_score = 40, double_out = TRUE)
   game$throw(c("D20"))
-  
+
   expect_true(game$is_finished())
-  
+
   # Undo the finishing throw
   game$undo()
-  
+
   expect_false(game$is_finished())
   expect_equal(game$current_score, 40L)
 })
@@ -182,7 +182,7 @@ test_that("three dart average is calculated correctly", {
   game <- darts$new(starting_score = 501)
   game$throw(c("T20", "T20", "T20"))  # 180
   game$throw(c("T20", "T20", "T20"))  # 180
-  
+
   summary <- game$summary()
   # Total scored: 360, darts thrown: 6
   # Three-dart average: (360 / 6) * 3 = 180
@@ -192,13 +192,13 @@ test_that("three dart average is calculated correctly", {
 test_that("summary shows correct checkout darts", {
   game <- darts$new(starting_score = 32, double_out = TRUE)
   game$throw(c("D16"))  # Finish in 1 dart
-  
+
   summary <- game$summary()
   expect_equal(summary$checkout_darts, 1L)
-  
+
   game2 <- darts$new(starting_score = 40, double_out = TRUE)
   game2$throw(c("S20", "D10"))  # Finish in 2 darts
-  
+
   summary2 <- game2$summary()
   expect_equal(summary2$checkout_darts, 2L)
 })
@@ -206,9 +206,9 @@ test_that("summary shows correct checkout darts", {
 test_that("empty turn history returns proper data frame", {
   game <- darts$new()
   turns <- game$get_turns()
-  
+
   expect_s3_class(turns, "data.frame")
-  expect_true(all(c("turn_number", "darts", "score_before", 
-                    "turn_score", "score_after", "is_bust", 
+  expect_true(all(c("turn_number", "darts", "score_before",
+                    "turn_score", "score_after", "is_bust",
                     "num_darts") %in% names(turns)))
 })
