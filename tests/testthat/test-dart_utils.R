@@ -128,3 +128,39 @@ test_that("max_turn_score errors on invalid input", {
   expect_error(max_turn_score(0))
   expect_error(max_turn_score(4))
 })
+
+test_that("parse_darts handles whitespace in input", {
+  result <- parse_darts(c(" T20 ", "  D16", "S5  "))
+
+  expect_equal(result$scores, c(60L, 32L, 5L))
+  expect_equal(result$is_double, c(FALSE, TRUE, FALSE))
+})
+
+test_that("get_valid_dart_scores includes all expected scores", {
+  scores <- get_valid_dart_scores()
+
+  # Check some key scores exist
+  expect_true(all(c(0, 1, 20, 25, 40, 50, 60) %in% scores))
+
+  # Check some invalid scores don't exist
+  expect_false(any(c(23, 59, 61, -1) %in% scores))
+
+  # Verify sorted
+  expect_equal(scores, sort(scores))
+})
+
+test_that("parse_single_dart handles edge cases", {
+  # Test case insensitivity
+  expect_equal(parse_single_dart("t20"), parse_single_dart("T20"))
+  expect_equal(parse_single_dart("d16"), parse_single_dart("D16"))
+
+  # Test various bullseye notations
+  expect_equal(parse_single_dart("BULL")$score, 50L)
+  expect_equal(parse_single_dart("DB")$score, 50L)
+  expect_equal(parse_single_dart("DBULL")$score, 50L)
+
+  # Test miss variations
+  expect_equal(parse_single_dart("M")$score, 0L)
+  expect_equal(parse_single_dart("MISS")$score, 0L)
+  expect_equal(parse_single_dart("")$score, 0L)
+})

@@ -67,7 +67,6 @@ parse_single_dart <- function(dart) {
   dart <- toupper(trimws(dart))
 
   # Handle miss
-
   if (dart %in% c("0", "M", "MISS", "")) {
     return(list(score = 0L, is_double = FALSE))
   }
@@ -153,7 +152,6 @@ is_valid_dart_score <- function(score) {
 get_valid_dart_scores <- function() {
   # Singles: 1-20
   singles <- 1L:20L
-
 
   # Doubles: 2, 4, 6, ..., 40
   doubles <- seq(2L, 40L, by = 2L)
